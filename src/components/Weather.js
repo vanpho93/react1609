@@ -1,31 +1,34 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import WeatherMessage from './WeatherMessage';
+import getWeatherApi from '../apis/getTempApi';
 
 export default class Weather extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cityName: 'Hanoi',
-            temp: 30
+            cityName: null,
+            temp: null,
+            isLoading: false
         }
         this.getWeather = this.getWeather.bind(this);
     }
 
-    getWeather(cityName) {
-        const url = 'http://api.openweathermap.org/data/2.5/weather?appid=01cc37655736835b0b75f2b395737694&units=metric&q=';
-        axios.get(url + cityName)
-        .then(response => {
-            const temp = response.data.main.temp;
-            this.setState({ temp, cityName });
-        })
-        .catch(error => console.log(error));
+    getWeather() {
+        const cityName = this.refs.txtCityName.value;
+        this.setState({ isLoading: true });
+        getWeatherApi(cityName)
+        .then(temp => this.setState({ cityName, temp, isLoading: false }))
+        .catch(error => {
+            alert('Cannot find your city name.');
+            this.setState({ cityName: null, temp: null, isLoading: false });
+        });
+        this.refs.txtCityName.value = '';
     }
 
     render() {
-        const { cityName, temp } = this.state;
         return (
             <div style={{ textAlign: 'center' }}>
-                <h3>{cityName} is now {temp}<sup>o</sup>C</h3>
+                <WeatherMessage {...this.state} />
                 <br />
                 <input ref="txtCityName" placeholder="Enter your city name" className="form-control"/>
                 <br /><br />
