@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Word from './Word';
+import WordForm from './WordForm';
 
 const words = [
     { en: 'hello', vn: 'xin chào', isMemorized: false },
@@ -33,28 +34,21 @@ export default class List extends Component {
         this.setState({ isShowForm: true });
     }
 
+    getForm() {
+        const { isShowForm } = this.state;
+        const myButton = (
+            <button className="btn btn-primary" onClick={this.onShowForm}>
+                Show Form
+            </button>
+        );
+        return isShowForm ? <WordForm /> : myButton;
+    }
+
     render() {
         const { arrWords, isShowForm } = this.state;
         return (
             <div>
-                { isShowForm ? (
-                    <div>
-                        <input className="form-control" placeholder="English" ref="txtEn" />
-                        <br />
-                        <input className="form-control" placeholder="Vietnamese" ref="txtVn" />
-                        <br />
-                        <label><input type="checkbox" ref="cbMemorized" /> Memorized</label>
-                        <br />
-                        <button className="btn btn-primary" onClick={this.addWord}>
-                            Add word
-                        </button>
-                    </div>
-                    ) : (
-                        <button className="btn btn-primary" onClick={this.onShowForm}>
-                            Show Form
-                        </button>
-                    )
-                }
+                { this.getForm() }
                 { arrWords.map(word => <Word key={word.en} {...word} />) }
             </div>
         );
