@@ -16,6 +16,10 @@ export default class List extends Component {
         this.onShowForm = this.onShowForm.bind(this);
     }
 
+    removeWord(en) {
+        
+    }
+
     addWord(en, vn, isMemorized) {
         const word = { en, vn, isMemorized };
         this.setState({ 
@@ -39,7 +43,7 @@ export default class List extends Component {
     }
 
     render() {
-        const { arrWords, isShowForm } = this.state;
+        const { arrWords } = this.state;
         return (
             <div>
                 { this.getForm() }
