@@ -16,6 +16,11 @@ export default class List extends Component {
         this.onShowForm = this.onShowForm.bind(this);
         this.removeWord = this.removeWord.bind(this);
         this.getWord = this.getWord.bind(this);
+        this.hideForm = this.hideForm.bind(this);
+    }
+
+    hideForm() {
+        this.setState({ isShowForm: false });
     }
 
     removeWord(en) {
@@ -42,7 +47,8 @@ export default class List extends Component {
                 Show Form
             </button>
         );
-        return isShowForm ? <WordForm onAddWord={this.addWord} /> : myButton;
+        const wordForm = <WordForm onAddWord={this.addWord} onHideForm={this.hideForm} />;
+        return isShowForm ? wordForm : myButton;
     }
 
     getWord(word) {

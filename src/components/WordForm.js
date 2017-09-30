@@ -25,9 +25,14 @@ export default class WordForm extends Component {
                 <br />
                 <label><input type="checkbox" ref="cbMemorized" /> Memorized</label>
                 <br />
-                <button className="btn btn-primary" onClick={this.addWord}>
-                    Add word
-                </button>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <button className="btn btn-primary" onClick={this.addWord}>
+                        Add word
+                    </button>
+                    <button className="btn btn-warning" onClick={this.props.onHideForm}>
+                        Cancel
+                    </button>
+                </div>
             </div>
         );
     }
