@@ -32,7 +32,7 @@ export default class List extends Component {
     toggleMemorized(en) {
         const newArrWords = this.state.arrWords.map(word => {
             if (word.en !== en) return word;
-            return { en: word.en, vn: word.vn, isMemorized: !word.isMemorized };
+            return { ...word, isMemorized: !word.isMemorized };
         });
         this.setState({ arrWords: newArrWords });
     }
