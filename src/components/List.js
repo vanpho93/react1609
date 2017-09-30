@@ -14,10 +14,13 @@ export default class List extends Component {
         this.state = { arrWords: words, isShowForm: false };
         this.addWord = this.addWord.bind(this);
         this.onShowForm = this.onShowForm.bind(this);
+        this.removeWord = this.removeWord.bind(this);
+        this.getWord = this.getWord.bind(this);
     }
 
     removeWord(en) {
-        
+        const newArrWords = this.state.arrWords.filter(word => word.en !== en);
+        this.setState({ arrWords: newArrWords });
     }
 
     addWord(en, vn, isMemorized) {
@@ -42,12 +45,16 @@ export default class List extends Component {
         return isShowForm ? <WordForm onAddWord={this.addWord} /> : myButton;
     }
 
+    getWord(word) {
+        return <Word key={word.en} {...word} onRemoveWord={this.removeWord} />;
+    }
+
     render() {
         const { arrWords } = this.state;
         return (
             <div>
                 { this.getForm() }
-                { arrWords.map(word => <Word key={word.en} {...word} />) }
+                { arrWords.map(this.getWord) }
             </div>
         );
     }
