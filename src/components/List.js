@@ -17,6 +17,7 @@ export default class List extends Component {
         this.removeWord = this.removeWord.bind(this);
         this.getWord = this.getWord.bind(this);
         this.hideForm = this.hideForm.bind(this);
+        this.toggleMemorized = this.toggleMemorized.bind(this);
     }
 
     hideForm() {
@@ -25,6 +26,14 @@ export default class List extends Component {
 
     removeWord(en) {
         const newArrWords = this.state.arrWords.filter(word => word.en !== en);
+        this.setState({ arrWords: newArrWords });
+    }
+
+    toggleMemorized(en) {
+        const newArrWords = this.state.arrWords.map(word => {
+            if (word.en !== en) return word;
+            return { en: word.en, vn: word.vn, isMemorized: !word.isMemorized };
+        });
         this.setState({ arrWords: newArrWords });
     }
 
@@ -47,12 +56,24 @@ export default class List extends Component {
                 Show Form
             </button>
         );
-        const wordForm = <WordForm onAddWord={this.addWord} onHideForm={this.hideForm} />;
+        const wordForm = (
+            <WordForm 
+                onAddWord={this.addWord} 
+                onHideForm={this.hideForm} 
+            />
+        );
         return isShowForm ? wordForm : myButton;
     }
 
     getWord(word) {
-        return <Word key={word.en} {...word} onRemoveWord={this.removeWord} />;
+        return (
+            <Word 
+                key={word.en} 
+                {...word} 
+                onRemoveWord={this.removeWord} 
+                onToggleMemorized={this.toggleMemorized}
+            />
+        );
     }
 
     render() {
