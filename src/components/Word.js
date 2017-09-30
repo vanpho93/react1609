@@ -10,4 +10,6 @@ const Word = ({ vn, en, isMemorized }) => {
     );
 };
 
+//FlatList
+
 export default Word;
