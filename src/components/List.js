@@ -16,18 +16,12 @@ export default class List extends Component {
         this.onShowForm = this.onShowForm.bind(this);
     }
 
-    addWord() {
-        const en = this.refs.txtEn.value;
-        const vn = this.refs.txtVn.value
-        const isMemorized = this.refs.cbMemorized.checked;
+    addWord(en, vn, isMemorized) {
         const word = { en, vn, isMemorized };
         this.setState({ 
             arrWords: this.state.arrWords.concat(word),
             isShowForm: false
         });
-        this.refs.txtEn.value = '';
-        this.refs.txtVn.value = '';
-        this.refs.cbMemorized.checked = false;
     }
 
     onShowForm() {
@@ -41,7 +35,7 @@ export default class List extends Component {
                 Show Form
             </button>
         );
-        return isShowForm ? <WordForm /> : myButton;
+        return isShowForm ? <WordForm onAddWord={this.addWord} /> : myButton;
     }
 
     render() {
